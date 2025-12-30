@@ -2,11 +2,11 @@
 # Usage: make <target>
 
 # Configuration
-OPENWRT_VERSION := 24.10.5
+OPENWRT_VERSION := 25.12.0-rc1
 TARGET := qualcommax
 SUBTARGET := ipq807x
 PROFILE := linksys_mx4200v1
-EXPECTED_SHA256 := 38fce4fbcd9ca26ff33bb6dbf9e9a22dceb05d2fb6bae3b9f8c2c0cde73f24c0
+EXPECTED_SHA256 := 5cd3b347115203b748c7841cad91c184d8f00aa8975a8e3af0a32f3f87ac36a5
 
 # Derived variables
 IMAGEBUILDER_ARCHIVE := openwrt-imagebuilder-$(OPENWRT_VERSION)-$(TARGET)-$(SUBTARGET).Linux-x86_64.tar.zst
@@ -91,12 +91,6 @@ build: extract
 	@cp -r files/* "$(IMAGEBUILDER_DIR)/files/" 2>/dev/null || true
 	@echo "$(YELLOW)Verifying files copied:$(NC)"
 	@ls -la "$(IMAGEBUILDER_DIR)/files/etc/" 2>/dev/null || echo "No etc directory found"
-	@if [ -f "$(IMAGEBUILDER_DIR)/files/etc/shadow" ]; then \
-		echo "$(GREEN)✓ shadow file copied$(NC)"; \
-		head -1 "$(IMAGEBUILDER_DIR)/files/etc/shadow"; \
-	else \
-		echo "$(RED)✗ shadow file not found$(NC)"; \
-	fi
 	@echo "$(YELLOW)Building firmware image...$(NC)"
 	@cd "$(IMAGEBUILDER_DIR)" && \
 		make image PROFILE="$(PROFILE)" PACKAGES="$(PACKAGES)" FILES="../files"
