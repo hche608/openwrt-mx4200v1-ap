@@ -1,9 +1,13 @@
 config system
 	option hostname 'OpenWrt'
-	option timezone 'UTC'
 	option ttylogin '0'
-	option log_size '64'
+	option log_size '128'
 	option urandom_seed '0'
+	option zonename 'Pacific/Auckland'
+	option log_proto 'udp'
+	option conloglevel '8'
+	option cronloglevel '7'
+	option timezone 'NZST-12NZDT,M9.5.0,M4.1.0/3'
 
 config timeserver 'ntp'
 	option enabled '1'

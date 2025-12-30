@@ -89,6 +89,14 @@ extract: verify
 build: extract
 	@echo "$(YELLOW)Copying custom files...$(NC)"
 	@cp -r files/* "$(IMAGEBUILDER_DIR)/files/" 2>/dev/null || true
+	@echo "$(YELLOW)Verifying files copied:$(NC)"
+	@ls -la "$(IMAGEBUILDER_DIR)/files/etc/" 2>/dev/null || echo "No etc directory found"
+	@if [ -f "$(IMAGEBUILDER_DIR)/files/etc/shadow" ]; then \
+		echo "$(GREEN)✓ shadow file copied$(NC)"; \
+		head -1 "$(IMAGEBUILDER_DIR)/files/etc/shadow"; \
+	else \
+		echo "$(RED)✗ shadow file not found$(NC)"; \
+	fi
 	@echo "$(YELLOW)Building firmware image...$(NC)"
 	@cd "$(IMAGEBUILDER_DIR)" && \
 		make image PROFILE="$(PROFILE)" PACKAGES="$(PACKAGES)" FILES="../files"
