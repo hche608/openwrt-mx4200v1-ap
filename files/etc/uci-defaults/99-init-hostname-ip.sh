@@ -34,7 +34,7 @@ case "$MAC_ADDR_UP" in
     IPADDR="192.168.192.79"
     CH_RADIO0="36"
     CH_RADIO1="1"
-    CH_RADIO2="100"
+    CH_RADIO2="149"
     ;;
   "D8:EC:5E:E1:B7:B4") # Node80
     HOSTNAME="Node80"
@@ -48,7 +48,7 @@ case "$MAC_ADDR_UP" in
     IPADDR="192.168.192.81"
     CH_RADIO0="44"
     CH_RADIO1="6"
-    CH_RADIO2="120"
+    CH_RADIO2="100"
     ;;
   *)
     # Keep defaults if no match

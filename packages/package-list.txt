@@ -1,7 +1,8 @@
 # Packages for MX4200 V1 AP mode
 luci
 luci-ssl
-wpad-openssl
+wpad-wolfssl
+zram-swap
 #dawn
 
 # Remove unwanted packages
