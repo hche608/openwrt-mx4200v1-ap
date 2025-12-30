@@ -2,7 +2,7 @@
 luci
 luci-ssl
 wpad-openssl
-dawn
+#dawn
 
 # Remove unwanted packages
 -firewall4
