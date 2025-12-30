@@ -27,8 +27,9 @@ After flashing:
 
 1. The device will be accessible at `192.168.1.2`
 2. Default WiFi credentials:
-   - 5GHz: `MX4200-5G` / `changeme123`
-   - 2.4GHz: `MX4200-2G` / `changeme123`
+   - 5GHz: `OpenWrt-5G` / `changeme123`
+   - 2.4GHz: `OpenWrt-2G` / `changeme123`
+   - 6GHz: `OpenWrt-6G` / `changeme123`
 3. Change the WiFi password via LuCI web interface
 4. Configure your main router to use `192.168.1.1` as gateway
 
