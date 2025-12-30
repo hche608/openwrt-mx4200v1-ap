@@ -1,7 +1,7 @@
 # Packages for MX4200 V1 AP mode
 luci
 luci-ssl
-wpad-wolfssl
+#wpad-wolfssl
 zram-swap
 #dawn
 
@@ -24,4 +24,4 @@ zram-swap
 -kmod-nf-log6
 -kmod-nf-reject6
 -umdns
--wpad-basic-mbedtls
+#-wpad-basic-mbedtls
