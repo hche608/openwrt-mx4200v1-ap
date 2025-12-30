@@ -22,11 +22,33 @@ jobs:
           gawk git gettext libssl-dev xsltproc rsync wget unzip \
           python3 python3-setuptools file
     
+    - name: Cache ImageBuilder archive
+      uses: actions/cache@v4
+      with:
+        path: openwrt-imagebuilder-24.10.5-qualcommax-ipq807x.Linux-x86_64.tar.zst
+        key: imagebuilder-archive-24.10.5-qualcommax-ipq807x-${{ hashFiles('Makefile') }}
+        restore-keys: |
+          imagebuilder-archive-24.10.5-qualcommax-ipq807x
+    
+    - name: Cache ImageBuilder extracted
+      uses: actions/cache@v4
+      with:
+        path: openwrt-imagebuilder-24.10.5-qualcommax-ipq807x.Linux-x86_64/
+        key: imagebuilder-extracted-24.10.5-qualcommax-ipq807x-${{ hashFiles('Makefile') }}
+        restore-keys: |
+          imagebuilder-extracted-24.10.5-qualcommax-ipq807x
+    
+    - name: Download and extract ImageBuilder
+      run: |
+        make download
+        make verify
+        make extract
+    
     - name: Make scripts executable
       run: chmod +x files/etc/uci-defaults/99-init-hostname-ip.sh
     
     - name: Build firmware
-      run: make all
+      run: make build
     
     - name: Upload firmware artifacts
       uses: actions/upload-artifact@v4
