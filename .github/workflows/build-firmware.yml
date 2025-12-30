@@ -22,21 +22,33 @@ jobs:
           gawk git gettext libssl-dev xsltproc rsync wget unzip \
           python3 python3-setuptools file
     
+    - name: Extract version info from Makefile
+      id: version
+      run: |
+        OPENWRT_VERSION=$(grep "^OPENWRT_VERSION :=" Makefile | cut -d'=' -f2 | tr -d ' ')
+        TARGET=$(grep "^TARGET :=" Makefile | cut -d'=' -f2 | tr -d ' ')
+        SUBTARGET=$(grep "^SUBTARGET :=" Makefile | cut -d'=' -f2 | tr -d ' ')
+        ARCHIVE_NAME="openwrt-imagebuilder-${OPENWRT_VERSION}-${TARGET}-${SUBTARGET}.Linux-x86_64.tar.zst"
+        DIR_NAME="openwrt-imagebuilder-${OPENWRT_VERSION}-${TARGET}-${SUBTARGET}.Linux-x86_64"
+        echo "archive_name=${ARCHIVE_NAME}" >> $GITHUB_OUTPUT
+        echo "dir_name=${DIR_NAME}" >> $GITHUB_OUTPUT
+        echo "version_key=${OPENWRT_VERSION}-${TARGET}-${SUBTARGET}" >> $GITHUB_OUTPUT
+    
     - name: Cache ImageBuilder archive
       uses: actions/cache@v4
       with:
-        path: openwrt-imagebuilder-24.10.5-qualcommax-ipq807x.Linux-x86_64.tar.zst
-        key: imagebuilder-archive-24.10.5-qualcommax-ipq807x-${{ hashFiles('Makefile') }}
+        path: ${{ steps.version.outputs.archive_name }}
+        key: imagebuilder-archive-${{ steps.version.outputs.version_key }}-${{ hashFiles('Makefile') }}
         restore-keys: |
-          imagebuilder-archive-24.10.5-qualcommax-ipq807x
+          imagebuilder-archive-${{ steps.version.outputs.version_key }}
     
     - name: Cache ImageBuilder extracted
       uses: actions/cache@v4
       with:
-        path: openwrt-imagebuilder-24.10.5-qualcommax-ipq807x.Linux-x86_64/
-        key: imagebuilder-extracted-24.10.5-qualcommax-ipq807x-${{ hashFiles('Makefile') }}
+        path: ${{ steps.version.outputs.dir_name }}/
+        key: imagebuilder-extracted-${{ steps.version.outputs.version_key }}-${{ hashFiles('Makefile') }}
         restore-keys: |
-          imagebuilder-extracted-24.10.5-qualcommax-ipq807x
+          imagebuilder-extracted-${{ steps.version.outputs.version_key }}
     
     - name: Download and extract ImageBuilder
       run: |
@@ -54,5 +66,8 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: openwrt-mx4200v1-firmware
-        path: openwrt-imagebuilder-*/bin/targets/qualcommax/ipq807x/*
+        path: |
+          ${{ steps.version.outputs.dir_name }}/bin/targets/qualcommax/ipq807x/*.bin
+          ${{ steps.version.outputs.dir_name }}/bin/targets/qualcommax/ipq807x/*.manifest
+          ${{ steps.version.outputs.dir_name }}/bin/targets/qualcommax/ipq807x/sha256sums
         retention-days: 30
