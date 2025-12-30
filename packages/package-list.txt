@@ -1,0 +1,25 @@
+# Packages for MX4200 V1 AP mode
+luci
+luci-ssl
+wpad-openssl
+dawn
+
+# Remove unwanted packages
+-firewall4
+-dnsmasq
+-odhcpd-ipv6only
+-ppp
+-pppoe
+-luci-app-firewall
+-luci-proto-ipv6
+-luci-proto-ppp
+-nftables-json
+-kmod-nft-core
+-kmod-nft-nat
+-kmod-nft-offload
+-kmod-nf-nat
+-kmod-nf-flow
+-kmod-nf-conntrack6
+-kmod-nf-log6
+-kmod-nf-reject6
+-umdns

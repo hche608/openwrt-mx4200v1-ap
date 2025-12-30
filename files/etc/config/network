@@ -1,0 +1,17 @@
+
+# Define LAN bridge and add all LAN ports + WAN (DSA names may vary by device)
+config device
+    option name 'br-lan'
+    option type 'bridge'
+    list ports 'lan1'
+    list ports 'lan2'
+    list ports 'lan3'
+    list ports 'wan'        # Use WAN as LAN (AP mode)
+
+config interface 'lan'
+    option device 'br-lan'
+    option proto 'static'
+    option ipaddr '192.168.192.100'   # Default; will be overridden at first boot by the script
+    option netmask '255.255.255.0'
+    option gateway '192.168.192.252'
+    option dns '192.168.192.252'
